@@ -4,7 +4,7 @@ A map and reader for the [OpenAI math repository](https://github.com/openai/math
 
 [Open the explorer](https://dwootton.github.io/openai-math-explorer/) · [Watch or download the demo](https://dwootton.github.io/openai-math-explorer/demo/)
 
-Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects or proof techniques. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. Plain-language guides are available for some entries; 234 of 372 currently fall back to the original claim.
+Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects or proof techniques. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. All 372 families have plain-language introductions. These summarize the manuscript claims and retain source references; they are not independent proof reviews.
 
 ## Run locally
 

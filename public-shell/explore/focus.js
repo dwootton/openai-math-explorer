@@ -6,7 +6,7 @@ initTheme();
 if(/^https:\/\/github\.com\//.test(siteConfig.repositoryUrl)){const link=document.querySelector('#project-repo');link.href=siteConfig.repositoryUrl;link.hidden=false;}
 const $=s=>document.querySelector(s),canvas=$('#map'),stage=$('#stage'),ctx=canvas.getContext('2d');
 const palette=['#61d9b6','#76b5f0','#edb465','#b5a3ef','#f091a2','#92c9d2','#cad37a','#e5abdf','#8bdec9','#89a4e4','#ec9b78','#baceed','#d4af84','#a4ca9a','#c498c9','#88c8ee','#e6d995'];
-const data=await fetch('./map-data.json?v=20261007c').then(r=>{if(!r.ok)throw Error('Map data unavailable');return r.json()}).catch(e=>{$('#loading').textContent=e.message;throw e});$('#loading').hidden=true;
+const data=await fetch('./map-data.json?v=20261007-guides').then(r=>{if(!r.ok)throw Error('Map data unavailable');return r.json()}).catch(e=>{$('#loading').textContent=e.message;throw e});$('#loading').hidden=true;
 let recording=false;
 const selectedIds=new Set();
 let mode='none',selected=null,subject='',hover=null,detailsOpen=false,matched=null,coords=data.modes.none.points.map(p=>[...p]),animation=null,width=stage.clientWidth,height=stage.clientHeight,eli5=true,frame=0,searchToken=0,searchTimer,searchController;
