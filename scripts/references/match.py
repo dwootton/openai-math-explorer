@@ -39,7 +39,7 @@ def main():
     def union(i,j,reason):
         a,b=find(i),find(j)
         if a==b:return
-        if reason not in ['identifier','identical citation']:
+        if reason != 'identifier':
             for prefix in ['doi:','arxiv:']:
                 x={k for k in root_ids[a] if k.startswith(prefix)};y={k for k in root_ids[b] if k.startswith(prefix)}
                 if x and y and x.isdisjoint(y):
@@ -96,7 +96,7 @@ def main():
         for f in family_ids:families[f].add(key)
         audit.append({'id':key,'variants':[{'citation':r['citation'],'source':r['source'],'families':r['families']} for r in group]})
     cat=json.loads((ROOT/'dist/data/catalogue.json').read_text())
-    result={'commit':data['commit'],'works':works,'families':{f['id']:sorted(families[f['id']]) for f in cat['families']},'extraction':{'manuscripts':data['manuscripts'],'sourceFiles':data['files'],'records':len(data['records']),'excludedReleaseReferences':excluded,'distinctWorks':len(works),'mergeCounts':dict(method),'conflictingTitleMatchesRejected':len(conflicts),'failedFiles':data['failures'],'citationFiltering':data.get('citationFiltering',{})}}
+    result={'commit':data['commit'],'works':works,'families':{f['id']:sorted(families[f['id']]) for f in cat['families']},'extraction':{'manuscripts':data['manuscripts'],'sourceFiles':data['files'],'records':len(data['records']),'excludedReleaseReferences':excluded,'distinctWorks':len(works),'mergeCounts':dict(method),'conflictingTextMatchesRejected':len(conflicts),'failedFiles':data['failures'],'citationFiltering':data.get('citationFiltering',{})}}
     (ROOT/'.cache/references-matched.json').write_text(json.dumps(result,ensure_ascii=False))
     (ROOT/'.cache/reference-match-audit.json').write_text(json.dumps({'groups':audit,'conflicts':conflicts},ensure_ascii=False))
     print(json.dumps(result['extraction'],indent=2));print('Missing families',[f for f,refs in result['families'].items() if not refs])

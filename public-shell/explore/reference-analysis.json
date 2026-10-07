@@ -3,14 +3,14 @@
   "sourceFiles": 1441,
   "records": 17040,
   "excludedReleaseReferences": 601,
-  "distinctWorks": 10602,
+  "distinctWorks": 10605,
   "mergeCounts": {
     "identifier": 4913,
-    "identical citation": 490,
+    "identical citation": 487,
     "title and author": 104,
     "exact title in citation": 330
   },
-  "conflictingTitleMatchesRejected": 25,
+  "conflictingTextMatchesRejected": 31,
   "failedFiles": [],
   "citationFiltering": {
     "sourceFiles": 7428,
@@ -57,7 +57,7 @@
     "370",
     "373"
   ],
-  "totalPairs": 2603,
+  "totalPairs": 2602,
   "largestLists": [
     {
       "id": "034",
