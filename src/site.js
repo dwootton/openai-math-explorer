@@ -1,4 +1,5 @@
-export const assetUrl=path=>new URL(path.replace(/^\//,''),document.baseURI).href;
+const appRoot=new URL(document.querySelector('meta[name=app-root]')?.content||'./',document.baseURI);
+export const assetUrl=path=>new URL(path.replace(/^\//,''),appRoot).href;
 let settings={backendBase:'',repositoryUrl:'',hosting:'gb10'};
 try{const r=await fetch(assetUrl('site-config.json'),{cache:'no-store'});if(r.ok)settings={...settings,...await r.json()};}catch{}
 export const siteConfig=settings;

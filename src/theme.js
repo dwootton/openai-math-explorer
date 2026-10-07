@@ -1,0 +1,3 @@
+let saved;try{saved=localStorage.getItem('math-explorer:theme')}catch{}
+const theme=saved==='light'?'light':'dark';document.documentElement.dataset.theme=theme;
+export function initTheme(){const b=document.querySelector('#theme-toggle');if(!b)return;function update(){const light=document.documentElement.dataset.theme==='light';b.textContent=light?'Dark mode':'Light mode';b.dataset.icon=light?'☾':'☀';b.setAttribute('aria-label','Switch to '+(light?'dark':'light')+' mode');}update();b.onclick=()=>{const next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;try{localStorage.setItem('math-explorer:theme',next)}catch{}update();dispatchEvent(new Event('themechange'))}}

@@ -30,7 +30,7 @@ export async function createPageCounter(file) {
     if(req.method!=='GET'||![200,304].includes(reply.statusCode))return;
     if(/prefetch/i.test(String(req.headers.purpose||req.headers['sec-purpose']||'')))return;
     const url=req.url.split('?')[0];
-    if(url==='/'||url==='/index.html')increment('app');
+    if(['/','/index.html','/explore/','/explore/index.html'].includes(url))increment('app');
     else if(url==='/demo/'||url==='/demo/index.html')increment('demo');
   },async close(){clearInterval(timer);await flush();}};
 }
