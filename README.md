@@ -2,9 +2,9 @@
 
 A map and reader for the [OpenAI math repository](https://github.com/openai/math): 372 research families, 722 manuscripts, and 17 subjects. Independent project, not an official OpenAI product.
 
-![Explorer demo](public-data/demo/concept-explorer-demo-v2.gif)
+[Open the explorer](https://dwootton.github.io/openai-math-explorer/) · [Watch or download the demo](https://dwootton.github.io/openai-math-explorer/demo/)
 
-Select a subject to dim other points. Compare research by mathematical objects, proof techniques, or custom concepts. Read the original manuscripts and linked Lean scope/source. ELI5 provides vocabulary and context, with the original claim one toggle away.
+Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects or proof techniques. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. Plain-language guides are available for some entries; 234 of 372 currently fall back to the original claim.
 
 ## Run locally
 
@@ -20,7 +20,7 @@ Open http://127.0.0.1:4318 . The precomputed research data is included; no embed
 
 Set Settings → Pages → Build and deployment → Source to **GitHub Actions**. Push to main to run the included deployment workflow. Project paths such as `/openai-math-explorer/` are supported. The app's GitHub link is generated from the repository running the workflow.
 
-GitHub Pages hosts static files. Maps, preset lenses, keyword search, ELI5, PDFs and Lean source reading work without a server. Semantic search and custom concepts require the separate embedding service. Set repository Actions variable `BACKEND_BASE_URL` to its HTTPS origin and set `ALLOWED_ORIGINS` on that server to the exact Pages origin (for example `https://yourname.github.io`). Without a backend URL, those two options are disabled. Never put API secrets in this variable or in the client.
+GitHub Pages hosts static files. Maps, preset lenses, keyword search, ELI5, PDFs and Lean source reading work without a server. Semantic search and custom concepts require the separate embedding service. The published workflow intentionally supplies no backend URL: semantic query search and custom concepts are disabled, and no requests go to the GB10. To enable a backend in a separate deployment, explicitly pass `BACKEND_BASE_URL` at build time and set the server’s `ALLOWED_ORIGINS` to the exact frontend origin. Never put API secrets in this variable or in the client.
 
 The backend includes a Fastify gateway and a private Python embedding service. Bind both to loopback, serve only dist, and expose the web gateway through an appropriate HTTPS reverse proxy. Google EmbeddingGemma 2 is pinned in server/model-config.json. The model needs a suitable Python/CUDA environment; requirements-lock.txt records the development environment. Use a dedicated account/container for a public backend rather than running it with access to personal files. Request limits reduce abuse but are not a substitute for edge protection.
 

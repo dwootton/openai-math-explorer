@@ -20,8 +20,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm run build:pages
-        env:
-          BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL }}
       - run: npm test
       - uses: actions/upload-pages-artifact@v4
         with:
