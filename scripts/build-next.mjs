@@ -4,6 +4,8 @@ await fs.mkdir(out,{recursive:true});for(const name of ['index.html','style.css'
 if(await fs.stat('public-data').catch(()=>null))await fs.cp('public-data',out,{recursive:true});
 if(process.env.GITHUB_PAGES==='true'){const repositoryUrl=process.env.GITHUB_REPOSITORY?'https://github.com/'+process.env.GITHUB_REPOSITORY:'';const backendBase=process.env.BACKEND_BASE_URL||'';if(backendBase&&!/^https:\/\//.test(backendBase))throw Error('Pages backend requires HTTPS');await fs.writeFile(out+'/site-config.json',JSON.stringify({hosting:'github-pages',repositoryUrl,backendBase}));await fs.writeFile(out+'/.nojekyll','');}
 await fs.cp('public-shell/explore',out+'/explore',{recursive:true});
+await fs.cp('public-shell/concepts',out+'/concepts',{recursive:true});
+await build({entryPoints:['public-shell/concepts/app.js'],outfile:out+'/concepts/app.js',bundle:true,format:'esm',minify:true});
 await fs.cp('public-shell/demo',out+'/demo',{recursive:true});
 if(await fs.stat('public-shell/posters').catch(()=>null))await fs.cp('public-shell/posters',out+'/posters',{recursive:true});
 await fs.cp('public-shell/explanations',out+'/explanations',{recursive:true});
@@ -14,6 +16,7 @@ const worker=Object.entries(bundles.metafile.outputs).find(([,v])=>v.entryPoint=
 await fs.copyFile(worker,out+'/map-worker.js');
 let html=await fs.readFile(out+'/index.html','utf8');html=html.replace("import('./app.js')","import('./"+path.basename(entry)+"')");await fs.writeFile(out+'/index.html',html);
 const digest=async file=>createHash('sha256').update(await fs.readFile(file)).digest('hex').slice(0,12);
+const conceptName='app-'+await digest(out+'/concepts/app.js')+'.js';await fs.copyFile(out+'/concepts/app.js',out+'/concepts/'+conceptName);let conceptHTML=await fs.readFile(out+'/concepts/index.html','utf8');conceptHTML=conceptHTML.replace('src="./app.js"','src="./'+conceptName+'"').replace('href="./style.css"','href="./style.css?v='+await digest(out+'/concepts/style.css')+'"');await fs.writeFile(out+'/concepts/index.html',conceptHTML);
 const focusName='focus-'+await digest(out+'/explore/focus.js')+'.js';await fs.copyFile(out+'/explore/focus.js',out+'/explore/'+focusName);
 for(const file of ['index.html','explore/index.html']){let h=await fs.readFile(out+'/'+file,'utf8');if(file.startsWith('explore/'))h=h.replace('src="./focus.js"','src="./'+focusName+'"');for(const name of ['header.css','style.css','explore/focus.css']){const href=file.startsWith('explore/')?(name==='explore/focus.css'?'./focus.css':'../'+name):'./'+name;h=h.replace('href="'+href+'"','href="'+href+'?v='+await digest(out+'/'+name)+'"');}await fs.writeFile(out+'/'+file,h);}
 await fs.mkdir(out+'/vendor',{recursive:true});await fs.copyFile('node_modules/pdfjs-dist/build/pdf.worker.min.mjs',out+'/vendor/pdf.worker.min.mjs');await fs.copyFile('node_modules/katex/dist/katex.min.css',out+'/vendor/katex.min.css');await fs.cp('node_modules/katex/dist/fonts',out+'/vendor/fonts',{recursive:true});
