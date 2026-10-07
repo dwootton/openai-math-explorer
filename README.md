@@ -4,7 +4,7 @@ A map and reader for the [OpenAI math repository](https://github.com/openai/math
 
 [Open the explorer](https://dwootton.github.io/openai-math-explorer/) · [Watch or download the demo](https://dwootton.github.io/openai-math-explorer/demo/)
 
-Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects or proof techniques. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. All 372 families have plain-language introductions. These summarize the manuscript claims and retain source references; they are not independent proof reviews.
+Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects, proof techniques, or shared references. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. All 372 families have plain-language introductions. These summarize the manuscript claims and retain source references; they are not independent proof reviews.
 
 ## Run locally
 
@@ -41,3 +41,7 @@ When self-hosted, the server keeps private UTC daily page-request totals for 90 
 ## Attribution
 
 Research artifacts remain subject to the upstream licenses retained in public-data/data/SOURCE-LICENSE.txt and LEAN-LICENSE.txt. PDFs and source links point at the pinned upstream repository. Third-party libraries retain their respective licenses. No claim of independent mathematical verification is made.
+
+## References view
+
+The References tab compares deduplicated cited works across each family’s manuscripts using rarity-weighted cosine similarity and an evidence-count adjustment. Expand a neighbor’s shared works to inspect links and both source bibliographies. The calculation is fully precomputed. [Matching, formula, caveats and rebuild instructions](content/reference-method.md).

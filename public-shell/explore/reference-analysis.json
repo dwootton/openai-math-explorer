@@ -1,0 +1,379 @@
+{
+  "manuscripts": 722,
+  "sourceFiles": 1441,
+  "records": 17040,
+  "excludedReleaseReferences": 601,
+  "distinctWorks": 10602,
+  "mergeCounts": {
+    "identifier": 4913,
+    "identical citation": 490,
+    "title and author": 104,
+    "exact title in citation": 330
+  },
+  "conflictingTitleMatchesRejected": 25,
+  "failedFiles": [],
+  "citationFiltering": {
+    "sourceFiles": 7428,
+    "unusedBibEntriesRemoved": 666,
+    "manuscriptsWithoutRecognizedCiteCommands": [
+      "A-latest-anchor-induction-with-spectrally-compact-masks-for-worst-case-trace-reconstruction-October-5-2026",
+      "Critical-bond-and-site-percolation-on-the-cubic-lattice-September-24-2026",
+      "All-temperature-pressure-for-orthogonally-invariant-Ising-spin-glasses-September-25-2026"
+    ],
+    "policy": "Filter BibTeX entries by cited keys across reachable TeX inputs; retain nocite-star databases, explicit bibitems and no-command fallbacks."
+  },
+  "families": 372,
+  "withSharedWorks": 341,
+  "isolated": [
+    "008",
+    "019",
+    "084",
+    "104",
+    "124",
+    "127",
+    "128",
+    "135",
+    "137",
+    "149",
+    "150",
+    "155",
+    "173",
+    "181",
+    "185",
+    "187",
+    "188",
+    "189",
+    "190",
+    "199",
+    "241",
+    "259",
+    "274",
+    "276",
+    "280",
+    "312",
+    "317",
+    "355",
+    "363",
+    "370",
+    "373"
+  ],
+  "totalPairs": 2603,
+  "largestLists": [
+    {
+      "id": "034",
+      "count": 287
+    },
+    {
+      "id": "032",
+      "count": 212
+    },
+    {
+      "id": "260",
+      "count": 156
+    },
+    {
+      "id": "014",
+      "count": 147
+    },
+    {
+      "id": "002",
+      "count": 134
+    },
+    {
+      "id": "211",
+      "count": 133
+    },
+    {
+      "id": "318",
+      "count": 127
+    },
+    {
+      "id": "004",
+      "count": 117
+    },
+    {
+      "id": "033",
+      "count": 110
+    },
+    {
+      "id": "223",
+      "count": 109
+    }
+  ],
+  "examples": [
+    {
+      "id": "001",
+      "neighbors": [
+        {
+          "id": "032",
+          "score": 0.06377123074937914,
+          "cosine": 0.07971403843672392,
+          "shared": [
+            "Hodge cycles on abelian varieties",
+            "Hodge classes on abelian varieties",
+            "Pour une theorie inconditionnelle des motifs",
+            "E. Markman, Secant sheaves and Weil classes on abelian varieties, preprint, contribution to the ICM 2026, arXiv:2509.23403v2 (11 February 2026). Version used for all locators, dated 13 February 2026.",
+            "Une remarque a propos des cycles de Hodge de type CM",
+            "Introduction to Shimura varieties",
+            "Lectures on Etale Cohomology",
+            "Algebraic Groups: The Theory of Group Schemes of Finite Type over a Field"
+          ]
+        },
+        {
+          "id": "014",
+          "score": 0.009050677182084101,
+          "cosine": 0.018101354364168203,
+          "shared": [
+            "Lectures on Etale Cohomology",
+            "Algebraic Groups: The Theory of Group Schemes of Finite Type over a Field"
+          ]
+        },
+        {
+          "id": "058",
+          "score": 0.005928217294106953,
+          "cosine": 0.017784651882320857,
+          "shared": [
+            "Introduction to Shimura varieties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "003",
+      "neighbors": [
+        {
+          "id": "023",
+          "score": 0.1260130765623443,
+          "cosine": 0.16201681272301413,
+          "shared": [
+            "D. R. Heath-Brown and S. J. Patterson, The distribution of Kummer sums at prime arguments, J. Reine Angew. Math. 310 (1979), 111–130. doi:10.1515/crll.1979.310.111.",
+            "D. R. Heath-Brown, Kummer's conjecture for cubic Gauss sums, Israel Journal of Mathematics 120 (2000), 97–124. . Numbered references use the author's manuscript.",
+            "M. N. Huxley, The large sieve inequality for algebraic number fields, Mathematika 15 (1968), no. 2, 178–187. doi:10.1112/S0025579300002540.",
+            "J. Thorner and A. Zaman, A unified and improved Chebotarev density theorem, Algebra & Number Theory 13 (2019), no. 5, 1039–1068. doi:10.2140/ant.2019.13.1039; arXiv:1803.02823.",
+            "A. Dunn and M. Radziwill, Bias in cubic Gauss sums: Patterson's conjecture, Annals of Mathematics 200 (2024), no. 3, 967–1057. . All numbered references to this paper use arXiv:2109.07463v3, May 14, 2024, .",
+            "Analytic Number Theory",
+            "S. J. Patterson, A cubic analogue of the theta series, Journal fur die reine und angewandte Mathematik 296 (1977), 125–161. doi:10.1515/crll.1977.296.125."
+          ]
+        },
+        {
+          "id": "029",
+          "score": 0.06205194997618805,
+          "cosine": 0.08687272996666326,
+          "shared": [
+            "L. Goldmakher and B. Louvel, A quadratic large sieve inequality over number fields, Mathematical Proceedings of the Cambridge Philosophical Society 154 (2013), no. 2, 193–212. doi:10.1017/S0305004112000370; arXiv:1112.1642.",
+            "J. Thorner and A. Zaman, A unified and improved Chebotarev density theorem, Algebra & Number Theory 13 (2019), no. 5, 1039–1068. doi:10.2140/ant.2019.13.1039; arXiv:1803.02823.",
+            "A. Dunn and M. Radziwill, Bias in cubic Gauss sums: Patterson's conjecture, Annals of Mathematics 200 (2024), no. 3, 967–1057. . All numbered references to this paper use arXiv:2109.07463v3, May 14, 2024, .",
+            "S. J. Patterson, A cubic analogue of the theta series, Journal fur die reine und angewandte Mathematik 296 (1977), 125–161. doi:10.1515/crll.1977.296.125.",
+            "A mean value estimate for real character sums"
+          ]
+        },
+        {
+          "id": "017",
+          "score": 0.019670211812738807,
+          "cosine": 0.039340423625477614,
+          "shared": [
+            "Lemmes de zeros dans les groupes algebriques commutatifs",
+            "Sur quelques resultats recents de transcendance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "074",
+      "neighbors": [
+        {
+          "id": "077",
+          "score": 0.13884230956596222,
+          "cosine": 0.17851154087052284,
+          "shared": [
+            "Besicovitch type maximal operators and applications to Fourier analysis",
+            "A streamlined proof of the Kakeya set conjecture in $\\mathbb{R}^{3}$",
+            "Curved Kakeya sets and Nikodym problems on manifolds",
+            "The multiplier problem for the ball",
+            "Restriction estimates using decoupling theorems and two-ends Furstenberg inequalities",
+            "On the multilinear restriction and Kakeya conjectures",
+            "Bounds on oscillatory integral operators based on multilinear estimates"
+          ]
+        },
+        {
+          "id": "078",
+          "score": 0.11259129046741984,
+          "cosine": 0.14476023060096835,
+          "shared": [
+            "The Kakeya maximal function and the spherical summation multipliers",
+            "The multiplier problem for the ball",
+            "Kaufman and Falconer estimates for radial projections and a continuum version of Beck's Theorem",
+            "On the distance sets spanned by sets of dimension $d/2$ in $\\mathbb{R}^d$",
+            "Furstenberg sets estimate in the plane",
+            "Restriction estimates using decoupling theorems and two-ends Furstenberg inequalities",
+            "Local entropy averages and projections of fractal measures"
+          ]
+        },
+        {
+          "id": "079",
+          "score": 0.07954581516934822,
+          "cosine": 0.1113641412370875,
+          "shared": [
+            "Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions",
+            "Furstenberg sets estimate in the plane",
+            "Local entropy averages and projections of fractal measures",
+            "On the multilinear restriction and Kakeya conjectures",
+            "Bounds on oscillatory integral operators based on multilinear estimates"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "196",
+      "neighbors": [
+        {
+          "id": "197",
+          "score": 0.10708717530413348,
+          "cosine": 0.1427829004055113,
+          "shared": [
+            "Asphericity of groups defined by graphs",
+            "On a small cancellation theorem of Gromov",
+            "A separator theorem for planar graphs",
+            "Random walk in random groups",
+            "Cohomology of Groups",
+            "Algebraic Topology"
+          ]
+        },
+        {
+          "id": "257",
+          "score": 0.06054876049745254,
+          "cosine": 0.10091460082908756,
+          "shared": [
+            "A separator theorem for planar graphs",
+            "Random walk in random groups",
+            "Algebraic Topology"
+          ]
+        },
+        {
+          "id": "285",
+          "score": 0.03875891415267842,
+          "cosine": 0.06459819025446403,
+          "shared": [
+            "Groups with graphical $C(6)$ and $C(7)$ small cancellation presentations",
+            "On a small cancellation theorem of Gromov",
+            "Random walk in random groups"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "197",
+      "neighbors": [
+        {
+          "id": "196",
+          "score": 0.10708717530413348,
+          "cosine": 0.1427829004055113,
+          "shared": [
+            "Asphericity of groups defined by graphs",
+            "On a small cancellation theorem of Gromov",
+            "A separator theorem for planar graphs",
+            "Random walk in random groups",
+            "Cohomology of Groups",
+            "Algebraic Topology"
+          ]
+        },
+        {
+          "id": "285",
+          "score": 0.07092400876015668,
+          "cosine": 0.09118801126305859,
+          "shared": [
+            "The spectral measure of certain elements of the complex group ring of a wreath product",
+            "On a small cancellation theorem of Gromov",
+            "A constructive proof of the general Lovasz local lemma",
+            "Random walk in random groups",
+            "Probabilistic Algorithms for Sparse Polynomials",
+            "Problems and results on $3$ -chromatic hypergraphs and some related questions",
+            "Fast Probabilistic Algorithms for Verification of Polynomial Identities"
+          ]
+        },
+        {
+          "id": "257",
+          "score": 0.040885362184463016,
+          "cosine": 0.06814227030743836,
+          "shared": [
+            "A separator theorem for planar graphs",
+            "Random walk in random groups",
+            "Algebraic Topology"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "073",
+      "neighbors": [
+        {
+          "id": "080",
+          "score": 0.07776672302141564,
+          "cosine": 0.11665008453212347,
+          "shared": [
+            "Sharp $L^2$ estimates of the Schrodinger maximal function in higher dimensions",
+            "An improved result for Falconer's distance set problem in even dimensions",
+            "On Falconer's distance set problem in the plane",
+            "The proof of the $\\ell^2$ decoupling conjecture"
+          ]
+        },
+        {
+          "id": "078",
+          "score": 0.07442520319720615,
+          "cosine": 0.11163780479580922,
+          "shared": [
+            "On the Hausdorff dimension of Furstenberg sets and orthogonal projections in the plane",
+            "An inequality related to the isoperimetric inequality",
+            "Kaufman and Falconer estimates for radial projections and a continuum version of Beck's Theorem",
+            "On the distance sets spanned by sets of dimension $d/2$ in $\\mathbb{R}^d$"
+          ]
+        },
+        {
+          "id": "077",
+          "score": 0.03280195674408071,
+          "cosine": 0.06560391348816141,
+          "shared": [
+            "On Falconer's distance set problem in the plane",
+            "The proof of the $\\ell^2$ decoupling conjecture"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "166",
+      "neighbors": [
+        {
+          "id": "167",
+          "score": 0.11758665448981712,
+          "cosine": 0.1567822059864228,
+          "shared": [
+            "On sets of distances of $n$ points",
+            "Crossing Numbers and Hard Erdos Problems in Discrete Geometry",
+            "Complexity Issues in VLSI: Optimal Layouts for the Shuffle-Exchange Graph and Other Networks",
+            "Crossing-Free Subgraphs",
+            "On the Erdos distinct distances problem in the plane",
+            "The Stacks Project"
+          ]
+        },
+        {
+          "id": "183",
+          "score": 0.03557816514943171,
+          "cosine": 0.07115633029886342,
+          "shared": [
+            "Complexity Issues in VLSI: Optimal Layouts for the Shuffle-Exchange Graph and Other Networks",
+            "Crossing-Free Subgraphs"
+          ]
+        },
+        {
+          "id": "170",
+          "score": 0.0336442125131088,
+          "cosine": 0.0672884250262176,
+          "shared": [
+            "On lines, joints, and incidences in three dimensions",
+            "Algebraic methods in discrete analogs of the Kakeya problem"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,8 @@ const families=new Map(catalogue.families.map(f=>[f.id,f]));
 function center(points){const mean=[0,1].map(j=>points.reduce((s,p)=>s+p[j],0)/points.length);const a=points.map(p=>p.map((v,j)=>v-mean[j]));const scale=Math.sqrt(a.reduce((s,p)=>s+p[0]**2+p[1]**2,0)/a.length);return a.map(p=>p.map(v=>v/scale));}
 const reference=center(semantic.docs.map(d=>{const p=base.find(p=>p.id===d.id);return[p.x,p.y]}));
 function align(points){let best;for(const flip of [1,-1]){const p=center(points).map(([x,y])=>[x,y*flip]);let a=0,b=0;for(let i=0;i<p.length;i++){a+=p[i][0]*reference[i][0]+p[i][1]*reference[i][1];b+=p[i][0]*reference[i][1]-p[i][1]*reference[i][0];}const theta=Math.atan2(b,a),c=Math.cos(theta),s=Math.sin(theta);const out=p.map(([x,y])=>[x*c-y*s,x*s+y*c]);const error=out.reduce((sum,v,i)=>sum+(v[0]-reference[i][0])**2+(v[1]-reference[i][1])**2,0);if(!best||error<best.error)best={out,error};}return best.out;}
-const modes={};
+const previous=await fs.readFile('public-shell/explore/map-data.json','utf8').then(JSON.parse).catch(()=>null);
+const modes={};if(previous?.modes.references)modes.references=previous.modes.references;
 for(const key of ['none','topics','methods']){
  const basis=key==='none'?null:lensBasis(presets[key].vectors,8).basis;
  const docs=semantic.docs.map(d=>({id:d.id,vector:basis?project(d.vector,basis):d.vector}));

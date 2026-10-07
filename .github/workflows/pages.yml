@@ -21,6 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run build:pages
       - run: npm test
+      - run: python3 scripts/references/test_extract.py
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
