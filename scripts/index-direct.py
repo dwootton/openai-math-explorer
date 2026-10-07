@@ -29,7 +29,10 @@ def vector(keys):
  if not keys:raise ValueError('No usable source chunks')
  v=np.mean([vectors[k] for k in sorted(set(keys))],axis=0,dtype=np.float64);v/=np.linalg.norm(v);return v.tolist()
 catalogue=json.load(open(ROOT/'dist/data/catalogue.json'));old={d['id']:d for d in json.load(open(ROOT/'dist/data/semantic.json'))['docs']};family_keys={f['id']:register(f['title']+'\n'+f['summary']) for f in catalogue['families']};encode_pending()
-(out/'semantic.json').write_text(json.dumps({**meta,'source':'family-title-and-description','docs':[{'id':f['id'],'vector':vector(family_keys[f['id']]),'searchVector':old[f['id']]['searchVector'],'chunks':len(family_keys[f['id']])} for f in catalogue['families']]}));print('TOPICS COMPLETE',flush=True)
+(out/'semantic.json').write_text(json.dumps({**meta,'sourceCommit':catalogue['commit'],'source':'family-title-and-description','docs':[{'id':f['id'],'vector':vector(family_keys[f['id']]),'searchVector':old[f['id']]['searchVector'],'chunks':len(family_keys[f['id']])} for f in catalogue['families']]}));print('TOPICS COMPLETE',flush=True)
+presets=json.load(open(ROOT/'dist/data/presets.json'));prompt_keys={name:[register(t) for t in p['prompts']] for name,p in presets.items()};encode_pending()
+for name,p in presets.items():p['vectors']=[vector(k) for k in prompt_keys[name]];p['embedding']=meta
+(out/'presets.json').write_text(json.dumps(presets))
 source=json.load(open(ROOT/'content/lean-declaration-manifest.json'));declaration_keys={id:register(d['text']) for id,d in source['declarations'].items()};encode_pending();docs=[];families={};excluded=[];audit={'topics':family_keys,'proofs':{},'leanFamilies':{}}
 for d in source['docs']:
  keys=sorted(set(k for name in d['declarations'] for k in declaration_keys[name]));
@@ -42,6 +45,6 @@ coverage='Named Lean targets plus two statically resolved reference hops. Extern
 source_out=ROOT/'public-shell/explore/lean-sources';source_out.mkdir(exist_ok=True)
 for id,f in families.items():
  declarations=[{'name':source['declarations'][k]['name'],'path':'lean/'+source['declarations'][k]['module'].replace('.','/')+'.lean','line':source['declarations'][k]['line']} for k in sorted(f['declarations'])]
- (source_out/(id+'.json')).write_text(json.dumps({'commit':source['commit'],'sourcePaths':sorted(f['paths']),'solutionPaths':sorted(f['roots']),'chunks':len(f['keys']),'externalImports':sorted(f['external']),'declarations':declarations,'unresolvedTargets':sorted(f['unresolved']),'ambiguousReferences':sorted(f['ambiguous']),'uncachedImports':sorted(f['uncached']),'maxReferenceDepth':2,'compilerVerified':False}));audit['leanFamilies'][id]=sorted(f['keys'])
+ (source_out/(id+'.json')).write_text(json.dumps({'excludedEntries':[d for d in excluded if d['familyId']==id],'commit':source['commit'],'sourcePaths':sorted(f['paths']),'solutionPaths':sorted(f['roots']),'chunks':len(f['keys']),'externalImports':sorted(f['external']),'declarations':declarations,'unresolvedTargets':sorted(f['unresolved']),'ambiguousReferences':sorted(f['ambiguous']),'uncachedImports':sorted(f['uncached']),'maxReferenceDepth':2,'compilerVerified':False}));audit['leanFamilies'][id]=sorted(f['keys'])
 report={**meta,'excludedEntries':excluded,'commit':source['commit'],'resolution':source['resolution'],'maxReferenceDepth':2,'compilerVerified':False,'families':{id:{'sourceModuleCount':len(f['paths']),'declarationCount':len(f['declarations']),'chunks':len(f['keys']),'unresolvedTargetCount':len(f['unresolved'])} for id,f in families.items()}}
 (ROOT/'public-shell/explore/lean-source-data.json').write_text(json.dumps(report));(ROOT/'.cache/direct-aggregation.json').write_text(json.dumps(audit));print('COMPLETE',len(families),'families',len(source['declarations']),'declarations',round(time.time()-started),'seconds',flush=True)

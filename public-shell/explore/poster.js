@@ -1,6 +1,6 @@
 import {palette,paperPalette} from './palette.js';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-const modeNames={none:'Paper summaries',topics:'Mathematical topics',lean:'Linked Lean source',references:'Shared references'};
+const modeNames={none:'Titles and descriptions',topics:'Mathematical topics',lean:'Linked Lean source',references:'Shared references'};
 export function posterSVG(data,mode='none',light=false){
  const bg=light?'#f4f0e7':'#0b141b',ink=light?'#253b40':'#e2e9e5',muted=light?'#627274':'#91a7ad',line=light?'#c7cec4':'#30434b',colors=light?paperPalette:palette;
  const docs=data.docs.map((d,i)=>({...d,index:i})).filter(d=>mode!=='lean'||data.modes.lean.counts[d.index]>0),coords=docs.map(d=>data.modes[mode].points[d.index]),xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]),nx=Math.min(...xs),mx=Math.max(...xs),ny=Math.min(...ys),my=Math.max(...ys),scale=Math.min(2000/(mx-nx),1570/(my-ny)),points=coords.map(([x,y])=>[1200+(x-(mx+nx)/2)*scale,1480+(y-(my+ny)/2)*scale]);
@@ -9,7 +9,7 @@ export function posterSVG(data,mode='none',light=false){
  svg+=text('OPENAI / MATH',150,150,28,muted,'letter-spacing="6"')+text('Mathematics',140,340,178,ink,'font-family="Georgia, Times New Roman, serif"')+text('A map of the research collection',150,427,40,muted);
  svg+=text(String(docs.length).padStart(3,'0'),1790,230,83,ink)+text('RESEARCH FAMILIES',1795,278,22,muted,'letter-spacing="2"')+text(modeNames[mode],1795,354,31,ink)+text('UMAP · 2 dimensions',1795,400,25,muted);
  svg+=`<path d="M150 493H2250" stroke="${line}" stroke-width="2"/>`;
- svg+=text(mode==='lean'?'Linked solution modules only · imported dependencies not expanded':'372 research families · 722 manuscripts · 17 subjects',150,553,25,muted);
+ svg+=text(mode==='lean'?'Named Lean targets + two static reference hops · partial coverage':'372 research families · 722 manuscripts · 17 subjects',150,553,25,muted);
  points.forEach(([x,y],i)=>{svg+=`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="8.3" fill="${colors[data.subjects.indexOf(docs[i].subject)]}" stroke="${bg}" stroke-width="2"/>`;});
  const names={'Number theory':'Number theory','Algebraic and complex geometry':'Algebraic geometry','Probability and statistical mechanics':'Probability','Combinatorics':'Combinatorics','Topology':'Topology','Functional analysis':'Functional analysis'};const boxes=[];
  for(const [subject,title] of Object.entries(names)){const ps=points.filter((_,i)=>docs[i].subject===subject);if(!ps.length)continue;const median=j=>ps.map(p=>p[j]).sort((a,b)=>a-b)[Math.floor(ps.length/2)],cx=median(0),cy=median(1),w=title.length*16+34,h=44;let best;

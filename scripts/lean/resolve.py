@@ -2,7 +2,7 @@
 Includes whole imported modules; this is conservative module-level resolution,
 not compiler-level declaration dependency analysis. External libraries are listed.
 """
-import json,pathlib,re,urllib.request,urllib.parse,concurrent.futures,time
+import json,pathlib,re,urllib.request,urllib.parse,urllib.error,concurrent.futures,time
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 def strip_comments(s):
  out=[];i=0;depth=0;string=False
@@ -35,6 +35,10 @@ def main():
  def request(url):
   for trial in range(4):
    try:return urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'math-explorer-source-index'}),timeout=40).read()
+   except urllib.error.HTTPError as e:
+    if e.code==429:raise RuntimeError("GitHub rate limited source fetching; stop and resume after Retry-After") from e
+    if trial==3:raise
+    time.sleep(1+trial)
    except Exception:
     if trial==3:raise
     time.sleep(1+trial)
@@ -47,7 +51,7 @@ def main():
   s=file.read_text();return module,{'path':path,'imports':imports(s),'characters':len(s)}
  while pending:
   missing={x for x in pending if not local(x)};external.update(missing);todo=sorted(x for x in pending if local(x) and x not in sources);pending=set()
-  with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
+  with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
    for name,value in pool.map(fetch,todo):sources[name]=value;pending.update(value['imports'])
   pending-=sources.keys();print('Resolved',len(sources),'pending',len(pending),flush=True)
  docs=[]

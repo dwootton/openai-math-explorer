@@ -31,7 +31,7 @@ let state={view:'map',mapSubject:'',showLabels:true,subject:'',q:'',mode:'keywor
 let semanticQuery=null,lens=null,mapCoords=null,mapVectors=null,embedWorker=null,job=0,mapJob=0,readJob=0;
 const pending=new Map();let worker;
 const colours=['#61d9b6','#76b5f0','#edb465','#b5a3ef','#f091a2','#92c9d2','#cad37a','#e5abdf','#8bdec9','#89a4e4','#ec9b78','#baceed','#d4af84','#a4ca9a','#c498c9','#88c8ee','#e6d995'];
-const get=async path=>{const r=await fetch(assetUrl(path),{cache:path.startsWith('/explanations/')?'no-cache':'default',signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error(`Could not load ${path} (${r.status})`);return r.json()};
+const get=async path=>{const r=await fetch(assetUrl(path+(path.startsWith('/data/')?'?v=direct-source-v1':'')),{cache:path.startsWith('/explanations/')?'no-cache':'default',signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error(`Could not load ${path} (${r.status})`);return r.json()};
 const family=id=>catalogue.families.find(f=>f.id===id);
 const sourceUrl=p=>`https://github.com/openai/math/blob/${catalogue.commit}/${p}`;
 const rawUrl=p=>`https://raw.githubusercontent.com/openai/math/${catalogue.commit}/${p}`;

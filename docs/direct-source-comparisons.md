@@ -14,7 +14,7 @@ The original attempt to collect the full import closure encountered GitHub rate 
 
 ## Coverage and interpretation
 
-Topics includes 372 families; Lean includes the 235 with catalogue-linked Lean solutions, encompassing 405 entries. Missing Lean families receive no invented source vector or neighbor ranking. A rank change between the tabs can partly reflect the changed candidate population; claims comparing ranks should restrict both rankings to their common covered families. Code similarity can reflect notation and formalization choices, not necessarily mathematical proof strategy.
+Topics includes 372 families; Lean includes the 235 with catalogue-linked Lean solutions, encompassing 405 catalogue entries. Two import-only entries have no resolved source and are excluded from the entry map (403 embedded entries); their families still have other available entries. Missing Lean families receive no invented source vector or neighbor ranking. A rank change between the tabs can partly reflect the changed candidate population; claims comparing ranks should restrict both rankings to their common covered families. Code similarity can reflect notation and formalization choices, not necessarily mathematical proof strategy.
 
 References is deliberately separate: inverse-frequency weighted shared citations, normalized for bibliography length and discounted for very small overlaps. It is not an embedding cosine comparison. Existing reference evidence and rankings are unchanged.
 
