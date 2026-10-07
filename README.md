@@ -4,7 +4,7 @@ A map and reader for the [OpenAI math repository](https://github.com/openai/math
 
 [Open the explorer](https://dwootton.github.io/openai-math-explorer/) · [Watch or download the demo](https://dwootton.github.io/openai-math-explorer/demo/)
 
-Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare research by mathematical objects, proof techniques, or shared references. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. All 372 families have plain-language introductions. These summarize the manuscript claims and retain source references; they are not independent proof reviews.
+Select a subject to dim other points, or Shift-click to keep multiple families highlighted. Compare paper summaries, linked Lean source, or shared references. Search titles, subjects, abstracts and family IDs locally in your browser. Read the original manuscripts and linked Lean scope/source. All 372 families have plain-language introductions. These summarize the manuscript claims and retain source references; they are not independent proof reviews.
 
 ## Run locally
 
@@ -45,3 +45,11 @@ Research artifacts remain subject to the upstream licenses retained in public-da
 ## References view
 
 The References tab compares deduplicated cited works across each family’s manuscripts using rarity-weighted cosine similarity and an evidence-count adjustment. Expand a neighbor’s shared works to inspect links and both source bibliographies. The calculation is fully precomputed. [Matching, formula, caveats and rebuild instructions](content/reference-method.md).
+
+## Lean source similarity
+
+The Lean proofs view uses existing embeddings of actual linked solution modules, including code and comments. Chunk embeddings are averaged per module; unique modules are then equally weighted and normalized per family. Neighbors use cosine similarity before UMAP projection. There are 402 distinct modules covering 235 families; the 137 families without linked solutions are not plotted or ranked in this view. The details panel links the exact files used.
+
+Imported dependencies are not expanded. Some entry modules are short wrappers around imported results, so source similarity is not a verified classification of proof techniques. Family 074 (Kakeya) has no linked Lean source; the former 250th-to-first example came from summary embeddings projected using technique prompts, not Lean proof comparison. The advanced explorer retains that experiment under “Technique prompts.”
+
+Rebuild this view with `node scripts/build-lean-map.mjs` after building the app data, then rebuild the site.
