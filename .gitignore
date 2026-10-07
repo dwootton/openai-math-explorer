@@ -9,3 +9,5 @@ previous-release/
 .env.*
 *.log
 __pycache__/
+artifacts/
+next-direct/

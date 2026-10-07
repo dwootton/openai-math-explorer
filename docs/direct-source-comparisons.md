@@ -1,6 +1,6 @@
 # Direct source comparisons
 
-Topics embeds each catalogue family's title and description. Lean embeds actual named target declarations and supporting source blocks, selected with the same bounded static expansion policy for every linked entry. Neither text view uses the former prompt/SVD projection.
+Topics embeds each catalogue family's title, description, paper titles and abstracts. Lean embeds actual named target declarations and supporting source blocks, selected with the same bounded static expansion policy for every linked entry. Neither text view uses the former prompt/SVD projection. Topic fields are verified against the upstream `CONTENTS.md` snapshot, including all 722 paper abstracts. ELI5 guides never enter embedding inputs. Each topic vector records a SHA-256 of its exact input text and the included paper paths. The concept atlas compares these source vectors against authored concept prompts; those prompts are not ELI5 guides.
 
 Both use google/embeddinggemma-2 revision 914f7f89142e33e77833254d9c9b90c3cef7303b, the SentenceSimilarity task, normalized 768-dimensional chunk vectors, 1,024-token chunks with 96-token overlap, and the normalized mean of unique chunk embeddings. Exact duplicate chunks count once within an entry or family. Nearest neighbors are ranked by cosine in the original 768 dimensions. UMAP is only a display, with the same cosine metric and settings for both text views.
 

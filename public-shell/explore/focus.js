@@ -11,7 +11,7 @@ import {siteConfig} from '../../src/site.js';
 initTheme();
 if(/^https:\/\/github\.com\//.test(siteConfig.repositoryUrl)){const link=document.querySelector('#project-repo');link.href=siteConfig.repositoryUrl;link.hidden=false;}
 const $=s=>document.querySelector(s),canvas=$('#map'),stage=$('#stage'),ctx=canvas.getContext('2d');
-const data=await fetch('./map-data.json?v=direct-source-v1').then(r=>{if(!r.ok)throw Error('Map data unavailable');return r.json()}).catch(e=>{$('#loading').textContent=e.message;throw e});$('#loading').hidden=true;
+const data=await fetch('./map-data.json?v=direct-source-v2').then(r=>{if(!r.ok)throw Error('Map data unavailable');return r.json()}).catch(e=>{$('#loading').textContent=e.message;throw e});$('#loading').hidden=true;
 let recording=false;
 const selectedIds=new Set();
 let mode='none',selected=null,subject='',hover=null,detailsOpen=false,matched=null,coords=data.modes.none.points.map(p=>[...p]),animation=null,width=stage.clientWidth,height=stage.clientHeight,eli5=false,frame=0,searchToken=0,searchTimer,searchController;
@@ -43,7 +43,7 @@ function updateSubjects(){document.querySelectorAll('[data-subject]').forEach(b=
 function filterSubject(s){const next=subject===s?'':s;select(null);subject=next;matched=null;updateSubjects();draw()}
 for(const s of data.subjects){const b=document.createElement('button');b.dataset.subject=s;b.setAttribute('aria-pressed','false');const swatch=document.createElement('b');swatch.style.background=color({subject:s});b.append(swatch,document.createTextNode(short[s]||s));b.onclick=()=>{const next=subject===s?'':s;select(null);subject=next;updateSubjects();draw()};$('#subjects').append(b);}
 const hit=(x,y)=>{let found=null,best=matchMedia('(pointer: coarse)').matches?22:16;positions.forEach((p,i)=>{if(!visibleId(docs[i].id))return;const d=Math.hypot(x-p[0],y-p[1]);if(d<best){best=d;found=docs[i].id}});return found};
-function updateCaption(){const source={none:'semantic similarity from family titles and descriptions',lean:'semantic similarity from Lean source and local dependencies',references:'similarity from weighted shared references'}[mode];$('#map-caption').textContent='UMAP of '+source+'. Nearby points tend to be more similar; distances are approximate.';}
+function updateCaption(){const source={none:'semantic similarity from family titles, descriptions, and paper abstracts',lean:'semantic similarity from Lean source and local dependencies',references:'similarity from weighted shared references'}[mode];$('#map-caption').textContent='UMAP of '+source+'. Nearby points tend to be more similar; distances are approximate.';}
 function zoomAt(value,x=width/2,y=height/2){const next=Math.max(.5,Math.min(8,value)),ratio=next/camera.zoom;camera.x=x-width/2-(x-width/2-camera.x)*ratio;camera.y=y-height/2-15-(y-height/2-15-camera.y)*ratio;camera.zoom=next;draw();}
 function fitMap(){camera={zoom:1,x:0,y:0};draw();}
 const pointers=new Map();let gesture=null;

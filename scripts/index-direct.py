@@ -3,6 +3,7 @@ import sys,pathlib,json,hashlib,time
 import numpy as np
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'server'))
 from embedding_model import Embedder,MODEL,REVISION
+from topic_source import topic_text
 out=ROOT/'next-direct/data';out.mkdir(parents=True,exist_ok=True);cache=ROOT/'.cache/direct-chunks';cache.mkdir(exist_ok=True)
 model=Embedder();started=time.time();print('MODEL READY',flush=True)
 meta={'model':MODEL,'revision':REVISION,'dimensions':768,'chunkTokens':1024,'overlapTokens':96,'prompt':'SentenceSimilarity','aggregation':'normalized-mean-of-unique-chunk-embeddings','comparison':'cosine','projection':None}
@@ -28,9 +29,9 @@ def encode_pending():
 def vector(keys):
  if not keys:raise ValueError('No usable source chunks')
  v=np.mean([vectors[k] for k in sorted(set(keys))],axis=0,dtype=np.float64);v/=np.linalg.norm(v);return v.tolist()
-catalogue=json.load(open(ROOT/'dist/data/catalogue.json'));old={d['id']:d for d in json.load(open(ROOT/'dist/data/semantic.json'))['docs']};family_keys={f['id']:register(f['title']+'\n'+f['summary']) for f in catalogue['families']};encode_pending()
-(out/'semantic.json').write_text(json.dumps({**meta,'sourceCommit':catalogue['commit'],'source':'family-title-and-description','docs':[{'id':f['id'],'vector':vector(family_keys[f['id']]),'searchVector':old[f['id']]['searchVector'],'chunks':len(family_keys[f['id']])} for f in catalogue['families']]}));print('TOPICS COMPLETE',flush=True)
-presets=json.load(open(ROOT/'dist/data/presets.json'));prompt_keys={name:[register(t) for t in p['prompts']] for name,p in presets.items()};encode_pending()
+data_root=ROOT/('public-data/data' if (ROOT/'public-data/data').exists() else 'dist/data');catalogue=json.load(open(data_root/'catalogue.json'));old={d['id']:d for d in json.load(open(data_root/'semantic.json'))['docs']};family_text={f['id']:topic_text(f) for f in catalogue['families']};family_keys={id:register(t) for id,t in family_text.items()};encode_pending()
+(out/'semantic.json').write_text(json.dumps({**meta,'sourceCommit':catalogue['commit'],'source':'upstream-family-title-description-paper-titles-and-abstracts','sourcePath':'CONTENTS.md','usesELI5':False,'docs':[{'id':f['id'],'vector':vector(family_keys[f['id']]),'searchVector':old[f['id']]['searchVector'],'chunks':len(family_keys[f['id']]),'inputSha256':hashlib.sha256(family_text[f['id']].encode()).hexdigest(),'paperPaths':[p['path'] for p in f['papers']]} for f in catalogue['families']]}));print('TOPICS COMPLETE',flush=True)
+presets=json.load(open(data_root/'presets.json'));prompt_keys={name:[register(t) for t in p['prompts']] for name,p in presets.items()};encode_pending()
 for name,p in presets.items():p['vectors']=[vector(k) for k in prompt_keys[name]];p['embedding']=meta
 (out/'presets.json').write_text(json.dumps(presets))
 source=json.load(open(ROOT/'content/lean-declaration-manifest.json'));declaration_keys={id:register(d['text']) for id,d in source['declarations'].items()};encode_pending();docs=[];families={};excluded=[];audit={'topics':family_keys,'proofs':{},'leanFamilies':{}}

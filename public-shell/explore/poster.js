@@ -1,6 +1,6 @@
 import {palette,paperPalette} from './palette.js';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-const modeNames={none:'Titles and descriptions',topics:'Mathematical topics',lean:'Linked Lean source',references:'Shared references'};
+const modeNames={none:'Titles and abstracts',topics:'Mathematical topics',lean:'Linked Lean source',references:'Shared references'};
 export function posterSVG(data,mode='none',light=false){
  const bg=light?'#f4f0e7':'#0b141b',ink=light?'#253b40':'#e2e9e5',muted=light?'#627274':'#91a7ad',line=light?'#c7cec4':'#30434b',colors=light?paperPalette:palette;
  const docs=data.docs.map((d,i)=>({...d,index:i})).filter(d=>mode!=='lean'||data.modes.lean.counts[d.index]>0),coords=docs.map(d=>data.modes[mode].points[d.index]),xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]),nx=Math.min(...xs),mx=Math.max(...xs),ny=Math.min(...ys),my=Math.max(...ys),scale=Math.min(2000/(mx-nx),1570/(my-ny)),points=coords.map(([x,y])=>[1200+(x-(mx+nx)/2)*scale,1480+(y-(my+ny)/2)*scale]);
