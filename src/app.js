@@ -1,3 +1,5 @@
+import {initELI5Hint} from './eli5-hint.js';
+initELI5Hint();
 import {initTheme} from './theme.js';
 import {lexicalSearch,semanticSearch,combineSearch,shouldSearchSemantic} from './search.mjs';
 initTheme();
@@ -9,8 +11,8 @@ import DOMPurify from 'dompurify';
 import renderMath from 'katex/contrib/auto-render';
 import {subjectGuides} from './subject-guides.mjs';
 let pdfjs;
-const eli5StorageKey='math-explorer:eli5';let eli5Enabled=true,guideObserver;
-try{eli5Enabled=localStorage.getItem(eli5StorageKey)!=='false';}catch{}
+const eli5StorageKey='math-explorer:eli5';let eli5Enabled=false,guideObserver;
+try{eli5Enabled=localStorage.getItem(eli5StorageKey)==='true';}catch{}
 function setELI5(enabled){trackEvent('eli5_toggle',{enabled});eli5Enabled=enabled;try{localStorage.setItem(eli5StorageKey,String(enabled));}catch{}
  document.querySelectorAll('[data-eli5]').forEach(el=>{el.querySelector('[role="switch"]').setAttribute('aria-checked',String(enabled));el.querySelector('.eli5-content').hidden=!enabled;el.querySelector('.source-claim').hidden=enabled;if(enabled)guideObserver?.observe(el);});
  document.querySelectorAll('.subject-explain').forEach(el=>{el.open=enabled;});

@@ -1,3 +1,5 @@
+import {initELI5Hint} from '../../src/eli5-hint.js';
+initELI5Hint();
 import {renderReferenceNeighbors} from './reference-ui.js';
 import renderMath from 'katex/contrib/auto-render';
 import {initTheme} from '../../src/theme.js';
@@ -10,8 +12,8 @@ const palette=['#61d9b6','#76b5f0','#edb465','#b5a3ef','#f091a2','#92c9d2','#cad
 const data=await fetch('./map-data.json?v=20261007-lean').then(r=>{if(!r.ok)throw Error('Map data unavailable');return r.json()}).catch(e=>{$('#loading').textContent=e.message;throw e});$('#loading').hidden=true;
 let recording=false;
 const selectedIds=new Set();
-let mode='none',selected=null,subject='',hover=null,detailsOpen=false,matched=null,coords=data.modes.none.points.map(p=>[...p]),animation=null,width=stage.clientWidth,height=stage.clientHeight,eli5=true,frame=0,searchToken=0,searchTimer,searchController;
-try{eli5=localStorage.getItem('math-explorer:eli5')!=='false'}catch{}
+let mode='none',selected=null,subject='',hover=null,detailsOpen=false,matched=null,coords=data.modes.none.points.map(p=>[...p]),animation=null,width=stage.clientWidth,height=stage.clientHeight,eli5=false,frame=0,searchToken=0,searchTimer,searchController;
+try{eli5=localStorage.getItem('math-explorer:eli5')==='true'}catch{}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,docs=data.docs,byId=new Map(docs.map((d,i)=>[d.id,{...d,index:i}]));
 const light=()=>document.documentElement.dataset.theme==='light';
 function color(d){const c=palette[data.subjects.indexOf(d.subject)];return light()?'#'+c.slice(1).match(/../g).map(v=>Math.round(parseInt(v,16)*.56).toString(16).padStart(2,'0')).join(''):c;}
