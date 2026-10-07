@@ -1,0 +1,96 @@
+import json,re,pathlib,shutil
+ROOT=pathlib.Path(__file__).resolve().parents[1];out=ROOT/'next/explanations';c=json.load(open(ROOT/'dist/data/catalogue.json'));lit=json.load(open(ROOT/'next/data/literature.json'));subjects=json.load(open(ROOT/'.cache/subject-guides.json'))
+# Short, authored definitions support orientation without paraphrasing away theorem hypotheses.
+glossary=[
+('irrationality exponent','A measure of how exceptionally well fractions can approximate a number as their denominators grow.'),
+('irrational','An irrational number cannot be written exactly as a fraction of two integers.'),
+('rational','A rational number is a number that can be written as a fraction of two integers.'),
+('prime','A prime is a whole number greater than one whose only positive divisors are one and itself.'),
+('elliptic curve','A geometric object defined by a particular kind of cubic equation; number theorists study its solutions in fractions.'),
+('quadratic twist','A related version of an equation obtained by changing a parameter in a controlled way.'),
+('analytic rank','A quantity obtained from how an associated function behaves near a particular point; the exact definition matters here.'),
+('Selmer','A Selmer group is an algebraic bookkeeping tool that helps constrain possible rational solutions to equations.'),
+('abelian variet','A higher-dimensional geometric object with a rule for adding its points; elliptic curves are the simplest examples.'),
+('Hodge','Hodge theory extracts structured information from complex geometric objects. A Hodge class is a special kind of cohomology class.'),
+('cohomolog','A way of assigning algebraic information to a shape, helping detect structure that may be difficult to see directly.'),
+('algebraic cycle','A formal combination of smaller algebraic shapes inside a larger one.'),
+('K3','A particular kind of complex geometric surface with strong symmetry in its geometric structure.'),
+('projective','A geometric setting that includes points at infinity, making many geometric relationships more uniform.'),
+('Kähler','A kind of geometric space in which complex coordinates, lengths, and an additional geometric structure are compatible.'),
+('curvature','A mathematical measurement of how a shape bends compared with a flat space.'),
+('manifold','A space that looks like ordinary flat space when you examine a sufficiently small neighborhood.'),
+('compact','A mathematical condition that rules out certain forms of escaping to infinity; in ordinary Euclidean space it means closed and bounded.'),
+('noncompact','A space that does not satisfy compactness; it can have behavior at large scales that compact spaces do not.'),
+('classifying space','A topological space designed to encode information about a group or another mathematical structure.'),
+('torsion-free','For a group, this means that repeatedly applying a nonidentity element never returns to the identity after finitely many repetitions.'),
+('group algebra','An algebra built from formal combinations of group elements with numerical coefficients.'),
+('group ring','A ring built from formal combinations of group elements with coefficients in another ring.'),
+('group','A structure for combining reversible operations, such as rotations or symmetries.'),
+('zero divisor','A nonzero algebraic element that can multiply another nonzero element to give zero.'),
+('directly finite','A condition saying that if multiplying a by b gives one, then multiplying b by a also gives one.'),
+('Lie algebra','A structure that records infinitesimal symmetries and how they interact.'),
+('generator','A building block from which other elements of a mathematical structure can be produced.'),
+('C∗','A collection of operators with algebraic and analytic structure; these objects are important in quantum mathematics.'),
+('C*','A collection of operators with algebraic and analytic structure; these objects are important in quantum mathematics.'),
+('operator','A transformation that takes a vector or function and produces another one.'),
+('eigenvalue','A scaling factor for a direction that a transformation leaves pointing along the same line.'),
+('spectral','Spectral questions concern values, such as eigenvalues, associated with an operator or system.'),
+('graph','A collection of points joined by connections; it can describe a network without requiring a particular drawing.'),
+('hypergraph','A generalization of a graph where one connection can join more than two points.'),
+('Ramsey','Ramsey-type questions ask when a large enough structure must contain an orderly pattern.'),
+('arithmetic progression','A sequence with the same gap between consecutive terms, such as 3, 7, 11, 15.'),
+('density','A way of measuring how much of a larger set is occupied; the particular counting convention matters.'),
+('asymptotic','A description of what happens as a size or parameter becomes very large.'),
+('polynomial time','Running time bounded by a fixed power of the input size, a common notion of computational efficiency.'),
+('NP-hard','A form of computational difficulty defined by reductions from a broad class of hard problems; it is not by itself a proof that every possible algorithm is slow.'),
+('algorithm','A precisely specified procedure for solving a problem or carrying out a computation.'),
+('approximation','An answer that is close to a target; the permitted error and how it changes with problem size are essential.'),
+('convex','A shape is convex if the straight segment between any two of its points stays inside the shape.'),
+('polar','In convex geometry, a shape associated with another shape through inequalities involving their points.'),
+('Hausdorff dimension','A notion of dimension that also works for irregular or fractal sets and need not be a whole number.'),
+('Lebesgue measure','The standard mathematical generalization of length, area, and volume.'),
+('distance','A mathematical measurement of separation between two points.'),
+('Ising','A model in which many sites carry one of two states and interact with one another.'),
+('spin glass','A model of interacting components with competing interactions and disorder.'),
+('Gaussian','A family of probability distributions and random fields generalizing the familiar bell curve.'),
+('probability','The mathematics of uncertainty and random behavior.'),
+('phase transition','A change in the large-scale behavior of a model as a parameter, such as temperature, changes.'),
+('ergodic','Ergodic theory studies how long-term behavior relates to the distribution of states in a system.'),
+('entropy','A quantity used to measure disorder, uncertainty, or dynamical complexity; its exact definition depends on the setting.'),
+('partial differential','An equation involving rates of change in several variables, often space and time.'),
+('regularity','How smooth or well-behaved a function, solution, or geometric object is.'),
+('singular','A place where an object or solution fails to have the expected smooth or regular behavior.'),
+('zeta','The Riemann zeta function is a mathematical function closely connected to prime numbers.'),
+('zero-free','A region is zero-free for a function if the function never takes the value zero there.'),
+('multiplicative','For arithmetic functions, values multiply when the inputs are relatively prime.'),
+('correlation','A measure of how two quantities vary together; a small correlation does not alone establish every form of independence.'),
+('uniform','A bound or statement whose control does not deteriorate across the specified range of inputs.'),
+('counterexample','A single valid object or case that violates a proposed general statement.'),
+('conjecture','A mathematical statement proposed to be true but requiring proof or a counterexample.'),
+('rigidity','The idea that certain constraints force an object to have a very restricted structure.'),
+('classification','A description of all objects of a specified kind, usually organized into recognizable types.'),
+('uniqueness','A claim that, within specified conditions, there is only one possible solution or object.'),
+('existence','A claim that at least one object or solution satisfying specified conditions can be found.'),
+('dimension','A way of measuring the number of independent directions or degrees of freedom; different theories use different notions.'),
+]
+orientations=[
+(['irrationality exponent'], 'How closely can fractions approximate a particular number?', 'Imagine improving a fraction by allowing a larger denominator. The question is how quickly the error can shrink, and whether exceptionally good approximations keep occurring. The precise rate claimed for this number is stated below.'),
+(['counterexample','disproves','refuting'], 'Can a carefully chosen example break a proposed mathematical rule?', 'A general rule says something must always happen under particular assumptions. One example satisfying those assumptions but violating the conclusion would overturn the rule. This entry reports such a construction; the exact rule and conditions are stated below.'),
+(['irrationality','is irrational'], 'Can this number be written exactly as a fraction?', 'A decimal expansion can go on forever even when a number is a fraction. Irrationality is the stronger statement that no fraction equals the number exactly. This entry concerns that distinction for the number in its title.'),
+(['np-hard','hardness','polynomial-time','polynomial time','algorithm','undecidab'], 'What can a precisely specified computation accomplish?', 'Some mathematical questions concern whether a procedure exists at all; others concern how much time or how accurate an approximation it needs. Those are different limits. This entry studies the particular computational question stated below.'),
+(['arithmetic progression','ramsey'], 'When does a large collection have to contain an orderly pattern?', 'Think of looking for a simple pattern inside a complicated arrangement. The interesting issue is which assumptions force the pattern to appear, and how large the arrangement must be. This entry gives a particular mathematical claim of that kind.'),
+(['distance'], 'How does the shape of a set control the distances between its points?', 'A collection of points produces a collection of distances. The question is what the original set forces that distance collection to look like. Counting distances in a finite set and measuring distances in a continuous set are different problems; the exact setting is stated below.'),
+(['classification','classifies'], 'Can all objects of this kind be organized into a complete description?', 'A classification aims to describe every object satisfying specified conditions, rather than just produce a few examples. The assumptions define which objects belong in the collection. This entry states a particular classification claim.'),
+(['convergence','converges','limit law'], 'Does complicated behavior settle into a predictable pattern?', 'Individual cases may vary, yet their behavior can approach a fixed value or distribution as a parameter grows. The exact kind of limit, and the conditions under which it is claimed, are part of the statement below.'),
+(['regularity','singular','smoothness'], 'Where can a mathematical object stop behaving smoothly?', 'A solution or shape may be well-behaved in some places and irregular in others. Understanding those irregularities helps distinguish a controlled solution from a possible breakdown. This entry studies the particular situation described below.')]
+for f in c['families']:
+ p=out/(f['id']+'.json');old=json.load(open(p)) if p.exists() else {}
+ if old:
+  archive=ROOT/'.cache/eli5-drafts';archive.mkdir(exist_ok=True);(archive/p.name).write_text(json.dumps(old,ensure_ascii=False))
+ text=(f['title']+' '+f['summary']).lower();question='What is this entry trying to establish?';idea=subjects[f['subject']]+' This entry studies the specific objects and conditions named in the source claim below.'
+ for words,q,i in orientations:
+  if any(w in text for w in words):question,idea=q,i;break
+ terms=[{'term':{'abelian variet':'abelian variety','cohomolog':'cohomology','singular':'singularities','partial differential':'partial differential equations'}.get(t,t),'meaning':d} for t,d in glossary if t.lower() in text][:7]
+ data={'familyId':f['id'],'question':question,'idea':idea,'why':subjects[f['subject']],'glossary':terms,'exactClaim':f['summary'].removesuffix(' )'),'explanationVersion':2,'sourceCommit':c['commit'],'reviewStatus':'source-preserving','scope':'A definition-led reading guide; the exact mathematical claim is preserved separately. This is not a proof assessment.',**lit.get(f['id'],{'references':[]})}
+ p.write_text(json.dumps(data,ensure_ascii=False))
+print('Built',len(c['families']),'source-preserving reading guides; unreviewed generative drafts retained privately.')

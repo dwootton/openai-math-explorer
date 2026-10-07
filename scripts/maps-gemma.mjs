@@ -1,0 +1,3 @@
+import fs from 'node:fs/promises';import {UMAP} from 'umap-js';
+const rng=()=>{let seed=42;return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296}};
+for(const [input,output] of [['semantic','map'],['proof-semantic','proof-map']]){const d=JSON.parse(await fs.readFile('next/data/'+input+'.json'));const p=new UMAP({nComponents:2,nNeighbors:15,minDist:.12,random:rng(),nEpochs:350}).fit(d.docs.map(d=>d.vector));await fs.writeFile('next/data/'+output+'.json',JSON.stringify(d.docs.map((d,i)=>({id:d.id,x:p[i][0],y:p[i][1]}))));console.log(output,p.length);}

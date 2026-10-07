@@ -1,0 +1,40 @@
+DRAFT — not posted. Attach the demo to post 1. The current app URL is temporary.
+
+1/7
+I made a map of OpenAI’s math repo: 372 research families, 722 manuscripts. Click a point to read the paper, see related work, or open its linked Lean material.
+
+Here’s a demo.
+
+2/7
+Click a subject label to dim everything else. The selection stays put while you browse.
+
+You can also compare papers by mathematical objects, proof techniques, or a list of concepts you write yourself. Each choice gives you different neighbors.
+
+3/7
+For example, the map links two distance problems: Falconer’s conjecture concerns fractal sets; Erdős-style problems count distances between finite points.
+
+There’s a useful connection, but the assumptions and conclusions are different.
+
+4/7
+ELI5 gives you context, definitions, and references from the manuscript. Switch it off to read the original claim. The app remembers your choice.
+
+These are reading aids. They don’t establish that a paper’s proof is correct.
+
+5/7
+The embeddings suggest six broad clusters, with weak separation. About 58% of a family’s five nearest neighbors share its subject label.
+
+I also tried a newer model. It changed the map, but tied the old model on a small search check: 9/12 first-place matches.
+
+6/7
+One thing to watch: 137 of the 372 families have no linked Lean material in this snapshot. The other 235 have links, but those may cover only part of a family.
+
+That’s the repo’s coverage, not a broken link in the explorer.
+
+7/7
+https://goto-stream-arms-during.trycloudflare.com/
+
+Source: github.com/openai/math
+Concept lenses: jasperlu.com/blog/prompted-similarity-search/
+Layout inspired by neurips2024.vizhub.ai
+
+Independent project, not an official OpenAI app.

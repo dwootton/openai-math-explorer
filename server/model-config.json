@@ -1,0 +1,10 @@
+{
+  "model": "google/embeddinggemma-2",
+  "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+  "dimensions": 768,
+  "dtype": "bfloat16",
+  "similarityPrompt": "SentenceSimilarity",
+  "queryPrompt": "SearchQuery",
+  "chunkTokens": 1024,
+  "overlapTokens": 96
+}

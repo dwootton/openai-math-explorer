@@ -1,0 +1,8 @@
+sentence-transformers>=6.1
+transformers>=5.17
+accelerate
+fastapi
+uvicorn
+scikit-learn
+numpy
+httpx
