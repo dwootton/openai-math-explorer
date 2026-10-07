@@ -1,0 +1,96 @@
+{
+  "selected": {
+    "nNeighbors": 12,
+    "minDist": 0.32,
+    "nEpochs": 400,
+    "seed": 42,
+    "metric": "cosine",
+    "metrics": {
+      "trustworthiness": 0.9192349454825137,
+      "neighborRecall": 0.4478494623655914
+    }
+  },
+  "metricsAtK": 10,
+  "variants": [
+    {
+      "name": "Current",
+      "metrics": {
+        "trustworthiness": 0.9224222956159798,
+        "neighborRecall": 0.4397849462365591
+      }
+    },
+    {
+      "name": "12 neighbors · minDist 0.08",
+      "neighbors": 12,
+      "minDist": 0.08,
+      "metrics": {
+        "trustworthiness": 0.926286778567012,
+        "neighborRecall": 0.4561827956989247
+      }
+    },
+    {
+      "name": "12 neighbors · minDist 0.2",
+      "neighbors": 12,
+      "minDist": 0.2,
+      "metrics": {
+        "trustworthiness": 0.9121333453980606,
+        "neighborRecall": 0.44193548387096776
+      }
+    },
+    {
+      "name": "12 neighbors · minDist 0.32",
+      "neighbors": 12,
+      "minDist": 0.32,
+      "metrics": {
+        "trustworthiness": 0.9192349454825137,
+        "neighborRecall": 0.4478494623655914
+      }
+    },
+    {
+      "name": "18 neighbors · minDist 0.08",
+      "neighbors": 18,
+      "minDist": 0.08,
+      "metrics": {
+        "trustworthiness": 0.9221983441161833,
+        "neighborRecall": 0.43629032258064515
+      }
+    },
+    {
+      "name": "18 neighbors · minDist 0.22",
+      "neighbors": 18,
+      "minDist": 0.22,
+      "metrics": {
+        "trustworthiness": 0.9101841378998325,
+        "neighborRecall": 0.4163978494623656
+      }
+    },
+    {
+      "name": "28 neighbors · minDist 0.35",
+      "neighbors": 28,
+      "minDist": 0.35,
+      "metrics": {
+        "trustworthiness": 0.9051403278589634,
+        "neighborRecall": 0.3922043010752688
+      }
+    },
+    {
+      "name": "40 neighbors · minDist 0.5",
+      "neighbors": 40,
+      "minDist": 0.5,
+      "metrics": {
+        "trustworthiness": 0.8853247673769775,
+        "neighborRecall": 0.33763440860215055
+      }
+    },
+    {
+      "name": "60 neighbors · minDist 0.65",
+      "neighbors": 60,
+      "minDist": 0.65,
+      "metrics": {
+        "trustworthiness": 0.8813381290624199,
+        "neighborRecall": 0.317741935483871
+      }
+    }
+  ],
+  "note": "Visual review selected more spacing with comparable neighborhood preservation. Metrics concern the 2D projection, not mathematical correctness. Neighbor rankings and the other three projections are unchanged."
+}

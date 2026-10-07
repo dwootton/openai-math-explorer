@@ -5,6 +5,7 @@ if(await fs.stat('public-data').catch(()=>null))await fs.cp('public-data',out,{r
 if(process.env.GITHUB_PAGES==='true'){const repositoryUrl=process.env.GITHUB_REPOSITORY?'https://github.com/'+process.env.GITHUB_REPOSITORY:'';const backendBase=process.env.BACKEND_BASE_URL||'';if(backendBase&&!/^https:\/\//.test(backendBase))throw Error('Pages backend requires HTTPS');await fs.writeFile(out+'/site-config.json',JSON.stringify({hosting:'github-pages',repositoryUrl,backendBase}));await fs.writeFile(out+'/.nojekyll','');}
 await fs.cp('public-shell/explore',out+'/explore',{recursive:true});
 await fs.cp('public-shell/demo',out+'/demo',{recursive:true});
+if(await fs.stat('public-shell/posters').catch(()=>null))await fs.cp('public-shell/posters',out+'/posters',{recursive:true});
 await fs.cp('public-shell/explanations',out+'/explanations',{recursive:true});
 const bundles=await build({entryPoints:['src/app.js','src/map-worker.js'],outdir:out,metafile:true,entryNames:'[name]-[hash]',bundle:true,splitting:true,chunkNames:'assets/[name]-[hash]',format:'esm',minify:true,sourcemap:false});
 await build({entryPoints:['public-shell/explore/focus.js'],outfile:out+'/explore/focus.js',bundle:true,format:'esm',minify:true});

@@ -1,0 +1,8 @@
+import fs from 'node:fs/promises';import {UMAP} from 'umap-js';import {dot} from '../src/lenses.mjs';
+const source=JSON.parse(await fs.readFile('public-shell/explore/map-data.json'));const vectors=JSON.parse(await fs.readFile('dist/data/semantic.json')).docs.map(d=>d.vector);const n=vectors.length,k=10;
+const hi=vectors.map((a,i)=>vectors.map((b,j)=>({j,d:i===j?Infinity:1-dot(a,b)})).sort((a,b)=>a.d-b.d).map(x=>x.j));
+function metrics(points){let penalty=0,overlap=0;for(let i=0;i<n;i++){const lo=points.map((p,j)=>({j,d:i===j?Infinity:Math.hypot(p[0]-points[i][0],p[1]-points[i][1])})).sort((a,b)=>a.d-b.d).slice(0,k).map(x=>x.j);for(const j of lo){let rank=hi[i].indexOf(j)+1;if(rank>k)penalty+=rank-k;else overlap++;}}return{trustworthiness:1-2*penalty/(n*k*(2*n-3*k-1)),neighborRecall:overlap/(n*k)};}
+const variants=[{name:'Current',points:source.modes.none.points}];
+for(const [neighbors,minDist] of [[12,.08],[12,.2],[12,.32],[18,.08],[18,.22],[28,.35],[40,.5],[60,.65]]){let seed=42;const random=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};const points=new UMAP({nNeighbors:neighbors,minDist,nEpochs:400,random,distanceFn:(a,b)=>Math.max(0,1-dot(a,b))}).fit(vectors);variants.push({name:`${neighbors} neighbors · minDist ${minDist}`,neighbors,minDist,points});console.log('Computed',neighbors,minDist);}
+for(const v of variants)v.metrics=metrics(v.points);
+await fs.writeFile('artifacts/layout-study/candidates.json',JSON.stringify({docs:source.docs,subjects:source.subjects,variants}));console.log(variants.map(({points,...v})=>v));

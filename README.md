@@ -53,3 +53,9 @@ The Lean proofs view uses existing embeddings of actual linked solution modules,
 Imported dependencies are not expanded. Some entry modules are short wrappers around imported results, so source similarity is not a verified classification of proof techniques. Family 074 (Kakeya) has no linked Lean source; the former 250th-to-first example came from summary embeddings projected using technique prompts, not Lean proof comparison. The advanced explorer retains that experiment under “Technique prompts.”
 
 Rebuild this view with `node scripts/build-lean-map.mjs` after building the app data, then rebuild the site.
+
+## Map styling and poster exports
+
+The default summary layout uses cosine UMAP with 12 neighbors, min_dist 0.32, 400 epochs and seed 42. Nine candidate layouts were rendered and visually reviewed. At k=10, the selected layout has trustworthiness 0.9192 (previously 0.9224) and neighbor recall 0.4478 (previously 0.4398). This is a spacing/readability tradeoff, not evidence of improved mathematical understanding. High-dimensional neighbor rankings and the other projections are unchanged. Details are in `public-shell/explore/layout-study.json`.
+
+Run `node scripts/study-layouts.mjs` and `node scripts/render-layout-study.mjs` to compare candidates. `node scripts/apply-poster-layout.mjs` applies the selected layout. `node scripts/render-posters.mjs` produces the two default posters. The map’s Poster button exports the current full comparison and theme as SVG or a 2400 × 3000 PNG. SVG preserves vector geometry for printing. Colors represent repository subjects; coordinates and labels are derived from the catalogue, with no generated illustration.

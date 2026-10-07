@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import {UMAP} from 'umap-js';
-import {lensBasis,project,rankNeighbors} from '../src/lenses.mjs';
+import {lensBasis,project,rankNeighbors,dot} from '../src/lenses.mjs';
 const read=async n=>JSON.parse(await fs.readFile('dist/data/'+n+'.json','utf8'));
 const [catalogue,semantic,presets,base]=await Promise.all(['catalogue','semantic','presets','map'].map(read));
 const families=new Map(catalogue.families.map(f=>[f.id,f]));
@@ -13,8 +13,9 @@ for(const key of ['none','topics']){
  const basis=key==='none'?null:lensBasis(presets[key].vectors,8).basis;
  const docs=semantic.docs.map(d=>({id:d.id,vector:basis?project(d.vector,basis):d.vector}));
  let coords=reference;
- if(basis){let seed=42;const random=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};coords=align(new UMAP({nNeighbors:15,minDist:.12,nEpochs:250,random}).fit(docs.map(d=>d.vector)));}
- modes[key]={points:coords,neighbors:docs.map(d=>rankNeighbors(d.vector,docs,d.id).slice(0,8).map(n=>({id:n.id,score:n.score})))};
+ const configured=key==='none'?previous?.modes.none.layout:null;
+ if(basis||configured){let seed=42;const random=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};coords=align(new UMAP({nNeighbors:configured?.nNeighbors||15,minDist:configured?.minDist??.12,nEpochs:configured?.nEpochs||250,random,...(configured?{distanceFn:(a,b)=>Math.max(0,1-dot(a,b))}:{})}).fit(docs.map(d=>d.vector)));}
+ modes[key]={...(configured?{layout:configured}:{}),points:coords,neighbors:docs.map(d=>rankNeighbors(d.vector,docs,d.id).slice(0,8).map(n=>({id:n.id,score:n.score})))};
  console.log('Computed',key);
 }
 const docs=await Promise.all(semantic.docs.map(async d=>{const f=families.get(d.id);const guide=JSON.parse(await fs.readFile('dist/explanations/'+d.id+'.json','utf8'));return{id:f.id,title:f.title,subject:f.subject,question:guide.question,idea:guide.idea,abstracts:f.papers.map(p=>p.abstract||'').join(' '),summary:f.summary,lean:!!f.leanDoc}}));
